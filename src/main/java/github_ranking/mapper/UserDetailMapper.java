@@ -1,27 +1,32 @@
 package github_ranking.mapper;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+
+import github_ranking.mapper.response.UserDetailEntity;
 
 @Mapper
 public interface UserDetailMapper {
-//	@Select("SELECT id, name,stockNum FROM Stock")
-//	public List<Stock> stocklist();
-//
-//	@Insert("insert into Stock (name, stockNum) values (#{name}, #{stockNum})")
-//	public void entryReqMapper(@Param("name") String name,@Param("stockNum")int stockNum);
-//
-//	@Delete("delete from Stock where id = #{id}")
-//	public void deleteReqMapper(@Param("id")int id);
-//
-//	@Select("select * from Stock where id = #{id}")
-//	public GootsParamRes gootsParamReqMapper(@Param("id")int id);
-//
-//	@Update("update Stock set name = #{name} where id = #{id}")
-//	public void updateReqMapper(@Param("id")int id,@Param("name")String name);
-//
-//	@Update("update Stock set stockNum = stockNum + #{stockNum} where id = #{id}")
-//	public void stockChangeMapper(@Param("id")int id,@Param("stockNum")int stockNum);
-//
-//	@Update("update Stock set stockNum = #{stockNum} where id = #{id}")
-//	public void upDateStockMapper(@Param("id")int id,@Param("stockNum")int stockNum);
+	//	@Select("SELECT id, name,stockNum FROM Stock")
+	//	public List<Stock> stocklist();
+	//
+	@Insert("insert into user_detail (user_name, user_id, tier, rank , score, followers_count, issues_count ,pullrequest_count, repositories_count, forks_count_total, stargazer_count_total, watchers_count_total, main_language) values (#{userName}, #{userId}, #{tier}, #{rank}, #{score}, #{followersCount}, #{issuesCount}, #{pullRequestCount}, #{repositoriesCount}, #{forksCountTotal}, #{stargazerCountTotal}, #{watchersCountTotal}, #{mainLanguage})")
+	public void entryReqMapper(@Param("userName") String userName, @Param("userId") String userId, @Param("tier") String tier, @Param("rank") int rank, @Param("score") int score, @Param("followersCount") int followersCount, @Param("issuesCount") int issuesCount, @Param("pullRequestCount") int pullRequestCount, @Param("repositoriesCount") int repositoriesCount, @Param("forksCountTotal") int forksCountTotal, @Param("stargazerCountTotal") int stargazerCountTotal, @Param("watchersCountTotal") int watchersCountTotal, @Param("mainLanguage") String mainLanguage);
+	//
+	//	@Delete("delete from Stock where id = #{id}")
+	//	public void deleteReqMapper(@Param("id")int id);
+	//
+		@Select("select * from user_detail where user_id = #{user_Id}")
+		public UserDetailEntity getUserDetail(@Param("user_Id")String userId);
+	//
+	//	@Update("update Stock set name = #{name} where id = #{id}")
+	//	public void updateReqMapper(@Param("id")int id,@Param("name")String name);
+	//
+	//	@Update("update Stock set stockNum = stockNum + #{stockNum} where id = #{id}")
+	//	public void stockChangeMapper(@Param("id")int id,@Param("stockNum")int stockNum);
+	//
+	//	@Update("update Stock set stockNum = #{stockNum} where id = #{id}")
+	//	public void upDateStockMapper(@Param("id")int id,@Param("stockNum")int stockNum);
 }
