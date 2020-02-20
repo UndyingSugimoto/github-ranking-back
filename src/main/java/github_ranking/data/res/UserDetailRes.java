@@ -6,10 +6,11 @@ import lombok.Data;
 public class UserDetailRes {
 	String userName;
 	String userId;
+	String avatarUrl;
 	String tier;
 	Integer rank;
 	Integer score;
-	Integer currentNumber;
+	Long currentNumber;
 	Integer followersCount;
 	Integer issuesCount;
 	Integer pullRequestCount;

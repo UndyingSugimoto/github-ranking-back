@@ -64,7 +64,8 @@ public class UserInformationService {
 		Integer score = 0;
 		Integer currentNumber = 0;
 
-		mapper.entryReqMapper(user.getUserId(), user.getUserId(), tier, rank, score, followersCount,
+		mapper.entryReqMapper(user.getUserId(), user.getUserId(), user.getAvatarUrl(), tier, rank, score,
+				followersCount,
 				issuesCount, pullRequestCount, repositoriesCount, forksCountTotal, stargazerCountTotal,
 				watchersCountTotal, mainLanguage);
 
@@ -77,20 +78,19 @@ public class UserInformationService {
 
 	public UserExistsRes userExists(String userId) {
 		UserDetailEntity entity = mapper.getUserDetail(userId);
-		System.out.println("userExists userId :"+userId);
+		System.out.println("userExists userId :" + userId);
 		UserExistsRes response = new UserExistsRes();
-		System.out.println("existsEntity :"+entity);
-		if(entity == null || entity.getUser_Id() == null) {
+		System.out.println("existsEntity :" + entity);
+		if (entity == null || entity.getUser_Id() == null) {
 			response.setExists(false);
-		}else {
+		} else {
 			response.setExists(true);
 		}
 		return response;
 	}
 
-
 	public UserDetailRes getUserDetail(String userId) {
-		return  convert(mapper.getUserDetail(userId));
+		return convert(mapper.getUserDetail(userId));
 	}
 
 	private UserDetailRes convert(UserDetailEntity entity) {
@@ -100,6 +100,7 @@ public class UserInformationService {
 		if (entity == null) {
 			return res;
 		}
+		res.setAvatarUrl(entity.getAvatar_Url());
 		res.setFollowersCount(entity.getFollowers_Count());
 		res.setForksCountTotal(entity.getForks_CountTotal());
 		res.setIssuesCount(entity.getIssues_Count());
@@ -113,8 +114,7 @@ public class UserInformationService {
 		res.setUserId(entity.getUser_Id());
 		res.setUserName(entity.getUser_Name());
 		res.setWatchersCountTotal(entity.getWatchers_Count_Total());
-
-
+		res.setCurrentNumber(mapper.getUserCount().stream().count());
 
 		return res;
 	}

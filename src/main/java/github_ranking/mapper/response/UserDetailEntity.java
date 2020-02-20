@@ -6,6 +6,7 @@ import lombok.Data;
 public class UserDetailEntity {
 	String user_Name;
 	String user_Id;
+	String avatar_Url;
 	String tier;
 	Integer rank;
 	Integer score;
