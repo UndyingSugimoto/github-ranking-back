@@ -78,7 +78,7 @@ public class UserInformationService {
 		Integer score = this.calcScore(followersCount, issuesCount, pullRequestCount, repositoriesCount,
 				forksCountTotal, stargazerCountTotal, watchersCountTotal);
 
-		mapper.entryReqMapper(user.getUserId(), user.getUserId(), user.getAvatarUrl(), user.getUrl(), tier, rank,
+		mapper.entryUserDetail(user.getUserId(), user.getUserId(), user.getAvatarUrl(), user.getUrl(), tier, rank,
 				score,
 				followersCount,
 				issuesCount, pullRequestCount, repositoriesCount, forksCountTotal, stargazerCountTotal,
@@ -90,6 +90,64 @@ public class UserInformationService {
 		res.setUserId(user.getUserId());
 		return res;
 	}
+
+	public UserEntryRes updateUserInformation(UserInformationRes req) {
+
+		User user = req.getUser();
+		Integer followersCount = user.getFollowers().getTotalCount();
+		Integer issuesCount = user.getIssues().getTotalCount();
+		Integer pullRequestCount = user.getPullRequests().getTotalCount();
+		Integer repositoriesCount = user.getRepositories().getTotalCount();
+		Integer forksCountTotal = user.getRepositories().getNodes().stream().mapToInt(t -> t.getForks().getTotalCount())
+				.sum();
+		Integer stargazerCountTotal = user.getRepositories().getNodes().stream()
+				.mapToInt(t -> t.getStargazers().getTotalCount())
+				.sum();
+		Integer watchersCountTotal = user.getRepositories().getNodes().stream()
+				.mapToInt(t -> t.getWatchers().getTotalCount())
+				.sum();
+		String mainLanguage = "";
+		long maxLangCount = 0;
+		List<String> distinctLanguageList = user.getRepositories().getNodes().stream().map(t -> {
+			if (t.getPrimaryLanguage() != null) {
+				return t.getPrimaryLanguage().getName();
+			} else {
+				return "nonlang";
+			}
+		}).distinct().collect(Collectors.toList());
+		for (String lang : distinctLanguageList) {
+			long currentCount = user.getRepositories().getNodes().stream().map(t -> {
+				if (t.getPrimaryLanguage() != null) {
+					return t.getPrimaryLanguage().getName();
+				} else {
+					return "nonlang";
+				}
+			})
+					.filter(t -> t.equals(lang)).count();
+			if (currentCount > maxLangCount) {
+				maxLangCount = currentCount;
+				mainLanguage = lang;
+			}
+		}
+
+		String tier = this.calcTier(user.getUserId());
+		Integer rank = this.calcRank(user.getUserId());
+		Integer score = this.calcScore(followersCount, issuesCount, pullRequestCount, repositoriesCount,
+				forksCountTotal, stargazerCountTotal, watchersCountTotal);
+
+		mapper.updateUserDetail(user.getUserId(), user.getUserId(), user.getAvatarUrl(), user.getUrl(), tier, rank,
+				score,
+				followersCount,
+				issuesCount, pullRequestCount, repositoriesCount, forksCountTotal, stargazerCountTotal,
+				watchersCountTotal, mainLanguage, LocalDate.now());
+
+		System.out.println("req"+ req);
+
+		UserEntryRes res = new UserEntryRes();
+		res.setUserId(user.getUserId());
+		return res;
+	}
+
 
 	public UserExistsRes userExists(String userId) {
 		UserDetailEntity entity = mapper.getUserDetail(userId);

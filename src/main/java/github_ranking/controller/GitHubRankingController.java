@@ -23,11 +23,19 @@ public class GitHubRankingController {
 	@Autowired
 	private UserInformationService userInformationService;
 
-	@PostMapping("userentry")
+	@PostMapping("user/entry")
 	@CrossOrigin(origins = {"http://localhost:3000"})
 	public UserEntryRes entryUserInfomation(@RequestBody UserInformationRes res) {
 		System.out.println("userentry :"+res);
 		return userInformationService.entryUserInformation(res);
+
+	}
+
+	@PostMapping("user/update")
+	@CrossOrigin(origins = {"http://localhost:3000"})
+	public UserEntryRes updateUserInfomation(@RequestBody UserInformationRes res) {
+		System.out.println("userupdate :"+res);
+		return userInformationService.updateUserInformation(res);
 
 	}
 
