@@ -1,5 +1,6 @@
 package github_ranking.mapper;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Insert;
@@ -15,14 +16,14 @@ public interface UserDetailMapper {
 	//	@Select("SELECT id, name,stockNum FROM Stock")
 	//	public List<Stock> stocklist();
 	//
-	@Insert("insert into user_detail (user_name, user_id , avatar_url , tier, rank , score, followers_count, issues_count ,pullrequest_count, repositories_count, forks_count_total, stargazer_count_total, watchers_count_total, main_language) values (#{userName}, #{userId},#{avatarUrl}, #{tier}, #{rank}, #{score}, #{followersCount}, #{issuesCount}, #{pullRequestCount}, #{repositoriesCount}, #{forksCountTotal}, #{stargazerCountTotal}, #{watchersCountTotal}, #{mainLanguage})")
+	@Insert("insert into user_detail (user_name, user_id , avatar_url , github_url , tier, rank , score, followers_count, issues_count ,pullrequest_count, repositories_count, forks_count_total, stargazer_count_total, watchers_count_total, main_language, lastupdate_date) values (#{userName}, #{userId},#{avatarUrl}, #{githubUrl}, #{tier}, #{rank}, #{score}, #{followersCount}, #{issuesCount}, #{pullRequestCount}, #{repositoriesCount}, #{forksCountTotal}, #{stargazerCountTotal}, #{watchersCountTotal}, #{mainLanguage},#{lastupdateDate})")
 	public void entryReqMapper(@Param("userName") String userName, @Param("userId") String userId,
-			@Param("avatarUrl") String avatarUrl, @Param("tier") String tier, @Param("rank") int rank,
+			@Param("avatarUrl") String avatarUrl, @Param("githubUrl") String githubUrl, @Param("tier") String tier, @Param("rank") int rank,
 			@Param("score") int score, @Param("followersCount") int followersCount,
 			@Param("issuesCount") int issuesCount, @Param("pullRequestCount") int pullRequestCount,
 			@Param("repositoriesCount") int repositoriesCount, @Param("forksCountTotal") int forksCountTotal,
 			@Param("stargazerCountTotal") int stargazerCountTotal, @Param("watchersCountTotal") int watchersCountTotal,
-			@Param("mainLanguage") String mainLanguage);
+			@Param("mainLanguage") String mainLanguage,@Param("lastupdateDate") LocalDate lastupdateDate);
 
 	//
 	//	@Delete("delete from Stock where id = #{id}")

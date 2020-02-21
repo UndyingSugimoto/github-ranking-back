@@ -1,5 +1,7 @@
 package github_ranking.data.res;
 
+import java.time.LocalDate;
+
 import lombok.Data;
 
 @Data
@@ -7,6 +9,7 @@ public class UserDetailRes {
 	String userName;
 	String userId;
 	String avatarUrl;
+	String githubUrl;
 	String tier;
 	Integer rank;
 	Integer score;
@@ -19,4 +22,5 @@ public class UserDetailRes {
 	Integer stargazerCountTotal;
 	Integer watchersCountTotal;
 	String mainLanguage;
+	LocalDate lastupdateDate;
 }

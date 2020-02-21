@@ -6,6 +6,7 @@ import lombok.Data;
 public class User {
 	String userId;
 	String avatarUrl;
+	String url;
 	Repositories repositories;
 	Followers followers;
 	PullRequests pullRequests;

@@ -1,5 +1,6 @@
 package github_ranking.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -77,10 +78,11 @@ public class UserInformationService {
 		Integer score = this.calcScore(followersCount, issuesCount, pullRequestCount, repositoriesCount,
 				forksCountTotal, stargazerCountTotal, watchersCountTotal);
 
-		mapper.entryReqMapper(user.getUserId(), user.getUserId(), user.getAvatarUrl(), tier, rank, score,
+		mapper.entryReqMapper(user.getUserId(), user.getUserId(), user.getAvatarUrl(), user.getUrl(), tier, rank,
+				score,
 				followersCount,
 				issuesCount, pullRequestCount, repositoriesCount, forksCountTotal, stargazerCountTotal,
-				watchersCountTotal, mainLanguage);
+				watchersCountTotal, mainLanguage, LocalDate.now());
 
 		System.out.println(req);
 
