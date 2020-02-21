@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import github_ranking.data.UserInformationRes;
+import github_ranking.data.res.RanksByLanguageRes;
 import github_ranking.data.res.UserDetailRes;
 import github_ranking.data.res.UserEntryRes;
 import github_ranking.data.res.UserExistsRes;
@@ -44,5 +45,11 @@ public class GitHubRankingController {
 	public UserDetailRes getUserDetail(@RequestParam("userId") String userId) {
 		System.out.println("userDetail :"+userId);
 		return userInformationService.getUserDetail(userId);
+	}
+	@GetMapping("ranking")
+	@CrossOrigin(origins = {"http://localhost:3000"})
+	public RanksByLanguageRes getRanking() {
+		System.out.println("RanksByLanguageRes :");
+		return userInformationService.getRanksByLanguage();
 	}
 }

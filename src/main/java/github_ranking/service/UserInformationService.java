@@ -6,8 +6,10 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import github_ranking.data.RankByLanguage;
 import github_ranking.data.User;
 import github_ranking.data.UserInformationRes;
+import github_ranking.data.res.RanksByLanguageRes;
 import github_ranking.data.res.UserDetailRes;
 import github_ranking.data.res.UserEntryRes;
 import github_ranking.data.res.UserExistsRes;
@@ -19,6 +21,14 @@ public class UserInformationService {
 
 	@Autowired
 	UserDetailMapper mapper;
+
+	private final Integer followersCountCoefficient = 1;
+	private final Integer issuesCountCoefficient = 1;
+	private final Integer pullRequestCountCoefficient = 2;
+	private final Integer repositoriesCountCoefficient = 1;
+	private final Integer forksCountTotalCoefficient = 3;
+	private final Integer stargazerCountTotalCoefficient = 3;
+	private final Integer watchersCountTotalCoefficient = 2;
 
 	public UserEntryRes entryUserInformation(UserInformationRes req) {
 
@@ -59,10 +69,10 @@ public class UserInformationService {
 			}
 		}
 
-		String tier = "";
-		Integer rank = 0;
-		Integer score = 0;
-		Integer currentNumber = 0;
+		String tier = this.calcTier(user.getUserId());
+		Integer rank = this.calcRank(user.getUserId());
+		Integer score = this.calcScore(followersCount, issuesCount, pullRequestCount, repositoriesCount,
+				forksCountTotal, stargazerCountTotal, watchersCountTotal);
 
 		mapper.entryReqMapper(user.getUserId(), user.getUserId(), user.getAvatarUrl(), tier, rank, score,
 				followersCount,
@@ -118,4 +128,88 @@ public class UserInformationService {
 
 		return res;
 	}
+
+	private Integer calcScore(Integer followersCount, Integer issuesCount, Integer pullRequestCount,
+			Integer repositoriesCount, Integer forksCountTotal, Integer stargazerCountTotal,
+			Integer watchersCountTotal) {
+		Integer followersCountScore = followersCount * followersCountCoefficient;
+		Integer issuesCountScore = issuesCount * issuesCountCoefficient;
+		Integer pullRequestCountScore = pullRequestCount * pullRequestCountCoefficient;
+		Integer repositoriesCountScore = repositoriesCount * repositoriesCountCoefficient;
+		Integer forksCountTotalScore = forksCountTotal * forksCountTotalCoefficient;
+		Integer stargazerCountTotalScore = stargazerCountTotal * stargazerCountTotalCoefficient;
+		Integer watchersCountTotalScore = watchersCountTotal * watchersCountTotalCoefficient;
+		Integer totalScore = followersCountScore + issuesCountScore + pullRequestCountScore + repositoriesCountScore
+				+ forksCountTotalScore + stargazerCountTotalScore + watchersCountTotalScore;
+
+		return totalScore;
+	}
+
+	private String calcTier(String userId) {
+		List<String> entities = mapper.getUserCount();
+		int rank = entities.indexOf(userId) + 1;
+		int totalCount = entities.size();
+		double challengerCheck = totalCount * 0.05;
+		if (rank <= challengerCheck) {
+			return "Challenger";
+		}
+
+		double masterCheck = totalCount * 0.10;
+		if (rank <= masterCheck) {
+			return "Master";
+		}
+
+		double diamondCheck = totalCount * 0.10;
+		if (rank <= diamondCheck) {
+			return "Diamond";
+		}
+
+		double pratinumCheck = totalCount * 0.10;
+		if (rank <= pratinumCheck) {
+			return "Pratinum";
+		}
+
+		double goldCheck = totalCount * 0.10;
+		if (rank <= goldCheck) {
+			return "Gold";
+		}
+
+		double silverCheck = totalCount * 0.10;
+		if (rank <= silverCheck) {
+			return "Silver";
+		}
+
+		return "Bronze";
+	}
+
+	private Integer calcRank(String userId) {
+		List<String> entities = mapper.getUserCount();
+		int rank = entities.indexOf(userId) + 1;
+		return rank;
+	}
+
+	public RanksByLanguageRes getRanksByLanguage() {
+		RanksByLanguageRes res = new RanksByLanguageRes();
+		res.getRankByLanguages().add(new RankByLanguage("General",
+				this.mapper.getUserListOrderByRank()));
+		res.getRankByLanguages().add(new RankByLanguage("JavaScript",
+				this.mapper.getUserListOrderByLanguageRank("JavaScript")));
+		res.getRankByLanguages().add(new RankByLanguage("Python",
+				this.mapper.getUserListOrderByLanguageRank("Python")));
+		res.getRankByLanguages().add(new RankByLanguage("Java",
+				this.mapper.getUserListOrderByLanguageRank("Java")));
+		res.getRankByLanguages().add(new RankByLanguage("C#",
+				this.mapper.getUserListOrderByLanguageRank("C#")));
+		res.getRankByLanguages().add(new RankByLanguage("PHP",
+				this.mapper.getUserListOrderByLanguageRank("PHP")));
+		res.getRankByLanguages().add(new RankByLanguage("C++",
+				this.mapper.getUserListOrderByLanguageRank("C++")));
+		res.getRankByLanguages().add(new RankByLanguage("Ruby",
+				this.mapper.getUserListOrderByLanguageRank("Ruby")));
+		res.getRankByLanguages().add(new RankByLanguage("Go",
+				this.mapper.getUserListOrderByLanguageRank("Go")));
+
+		return res;
+	}
+
 }
