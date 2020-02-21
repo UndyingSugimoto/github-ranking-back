@@ -46,6 +46,7 @@ public class GitHubRankingController {
 		System.out.println("userDetail :"+userId);
 		return userInformationService.getUserDetail(userId);
 	}
+
 	@GetMapping("ranking")
 	@CrossOrigin(origins = {"http://localhost:3000"})
 	public RanksByLanguageRes getRanking() {

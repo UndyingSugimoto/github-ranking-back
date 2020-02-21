@@ -1,11 +1,13 @@
 package github_ranking.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import github_ranking.data.MinimumUserInfomation;
 import github_ranking.data.RankByLanguage;
 import github_ranking.data.User;
 import github_ranking.data.UserInformationRes;
@@ -14,6 +16,7 @@ import github_ranking.data.res.UserDetailRes;
 import github_ranking.data.res.UserEntryRes;
 import github_ranking.data.res.UserExistsRes;
 import github_ranking.mapper.UserDetailMapper;
+import github_ranking.mapper.response.MinimumUserInfomationEntity;
 import github_ranking.mapper.response.UserDetailEntity;
 
 @Service
@@ -116,11 +119,11 @@ public class UserInformationService {
 		res.setIssuesCount(entity.getIssues_Count());
 		res.setMainLanguage(entity.getMain_Language());
 		res.setPullRequestCount(entity.getPullRequest_Count());
-		res.setRank(entity.getRank());
+		res.setRank(this.calcRank(entity.getUser_Id()));
 		res.setRepositoriesCount(entity.getRepositories_Count());
 		res.setScore(entity.getScore());
 		res.setStargazerCountTotal(entity.getStargazer_Count_Total());
-		res.setTier(entity.getTier());
+		res.setTier(this.calcTier(entity.getUser_Id()));
 		res.setUserId(entity.getUser_Id());
 		res.setUserName(entity.getUser_Name());
 		res.setWatchersCountTotal(entity.getWatchers_Count_Total());
@@ -190,25 +193,39 @@ public class UserInformationService {
 
 	public RanksByLanguageRes getRanksByLanguage() {
 		RanksByLanguageRes res = new RanksByLanguageRes();
+		res.setRankByLanguages(new ArrayList<RankByLanguage>());
+		System.out.println("getUserListOrderByRank :" + this.mapper.getUserListOrderByRank());
 		res.getRankByLanguages().add(new RankByLanguage("General",
-				this.mapper.getUserListOrderByRank()));
+				convert(this.mapper.getUserListOrderByRank())));
 		res.getRankByLanguages().add(new RankByLanguage("JavaScript",
-				this.mapper.getUserListOrderByLanguageRank("JavaScript")));
+				convert(this.mapper.getUserListOrderByLanguageRank("JavaScript"))));
 		res.getRankByLanguages().add(new RankByLanguage("Python",
-				this.mapper.getUserListOrderByLanguageRank("Python")));
+				convert(this.mapper.getUserListOrderByLanguageRank("Python"))));
 		res.getRankByLanguages().add(new RankByLanguage("Java",
-				this.mapper.getUserListOrderByLanguageRank("Java")));
+				convert(this.mapper.getUserListOrderByLanguageRank("Java"))));
 		res.getRankByLanguages().add(new RankByLanguage("C#",
-				this.mapper.getUserListOrderByLanguageRank("C#")));
+				convert(this.mapper.getUserListOrderByLanguageRank("C#"))));
 		res.getRankByLanguages().add(new RankByLanguage("PHP",
-				this.mapper.getUserListOrderByLanguageRank("PHP")));
+				convert(this.mapper.getUserListOrderByLanguageRank("PHP"))));
 		res.getRankByLanguages().add(new RankByLanguage("C++",
-				this.mapper.getUserListOrderByLanguageRank("C++")));
+				convert(this.mapper.getUserListOrderByLanguageRank("C++"))));
 		res.getRankByLanguages().add(new RankByLanguage("Ruby",
-				this.mapper.getUserListOrderByLanguageRank("Ruby")));
+				convert(this.mapper.getUserListOrderByLanguageRank("Ruby"))));
 		res.getRankByLanguages().add(new RankByLanguage("Go",
-				this.mapper.getUserListOrderByLanguageRank("Go")));
+				convert(this.mapper.getUserListOrderByLanguageRank("Go"))));
 
+		return res;
+	}
+
+	private List<MinimumUserInfomation> convert(List<MinimumUserInfomationEntity> list) {
+		List<MinimumUserInfomation> res = list.stream().map(t -> {
+			MinimumUserInfomation after = new MinimumUserInfomation();
+			after.setAvatarUrl(t.getAvatar_url());
+			after.setMainLanguage(t.getMain_language());
+			after.setScore(t.getScore());
+			after.setUserId(t.getUser_id());
+			return after;
+		}).collect(Collectors.toList());
 		return res;
 	}
 

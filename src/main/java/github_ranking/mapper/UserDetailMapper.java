@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
-import github_ranking.data.MinimumUserInfomation;
+import github_ranking.mapper.response.MinimumUserInfomationEntity;
 import github_ranking.mapper.response.UserDetailEntity;
 
 @Mapper
@@ -31,14 +31,14 @@ public interface UserDetailMapper {
 	@Select("select * from user_detail where user_id = #{user_Id}")
 	public UserDetailEntity getUserDetail(@Param("user_Id") String userId);
 
-	@Select("select user_Id from user_detail order by score")
+	@Select("select user_Id from user_detail order by score desc")
 	public List<String> getUserCount();
 
-	@Select("select user_Id , main_language, score, avatar_url from user_detail where main_language = #{language} order by score limit 3")
-	public List<MinimumUserInfomation> getUserListOrderByLanguageRank(@Param("language") String language);
+	@Select("select user_Id , main_language, score, avatar_url from user_detail where main_language = #{language} order by score desc limit 3")
+	public List<MinimumUserInfomationEntity> getUserListOrderByLanguageRank(@Param("language") String language);
 
-	@Select("select user_Id , main_language, score, avatar_url from user_detail order by score limit 3")
-	public List<MinimumUserInfomation> getUserListOrderByRank();
+	@Select("select user_id , main_language, score, avatar_url from user_detail order by score desc limit 3")
+	public List<MinimumUserInfomationEntity> getUserListOrderByRank();
 	//
 	//	@Update("update Stock set name = #{name} where id = #{id}")
 	//	public void updateReqMapper(@Param("id")int id,@Param("name")String name);
