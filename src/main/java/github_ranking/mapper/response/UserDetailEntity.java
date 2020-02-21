@@ -14,7 +14,7 @@ public class UserDetailEntity {
 	Integer issues_Count;
 	Integer pullRequest_Count;
 	Integer repositories_Count;
-	Integer forks_CountTotal;
+	Integer forks_Count_Total;
 	Integer stargazer_Count_Total;
 	Integer watchers_Count_Total;
 	String main_Language;

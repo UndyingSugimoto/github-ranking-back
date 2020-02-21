@@ -115,7 +115,7 @@ public class UserInformationService {
 		}
 		res.setAvatarUrl(entity.getAvatar_Url());
 		res.setFollowersCount(entity.getFollowers_Count());
-		res.setForksCountTotal(entity.getForks_CountTotal());
+		res.setForksCountTotal(entity.getForks_Count_Total());
 		res.setIssuesCount(entity.getIssues_Count());
 		res.setMainLanguage(entity.getMain_Language());
 		res.setPullRequestCount(entity.getPullRequest_Count());
@@ -162,22 +162,22 @@ public class UserInformationService {
 			return "Master";
 		}
 
-		double diamondCheck = totalCount * 0.10;
+		double diamondCheck = totalCount * 0.15;
 		if (rank <= diamondCheck) {
 			return "Diamond";
 		}
 
-		double pratinumCheck = totalCount * 0.10;
+		double pratinumCheck = totalCount * 0.20;
 		if (rank <= pratinumCheck) {
 			return "Pratinum";
 		}
 
-		double goldCheck = totalCount * 0.10;
+		double goldCheck = totalCount * 0.30;
 		if (rank <= goldCheck) {
 			return "Gold";
 		}
 
-		double silverCheck = totalCount * 0.10;
+		double silverCheck = totalCount * 0.40;
 		if (rank <= silverCheck) {
 			return "Silver";
 		}

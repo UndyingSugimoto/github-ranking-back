@@ -28,7 +28,7 @@ public interface UserDetailMapper {
 	//	@Delete("delete from Stock where id = #{id}")
 	//	public void deleteReqMapper(@Param("id")int id);
 	//
-	@Select("select * from user_detail where user_id = #{user_Id}")
+	@Select("select * from user_detail where LOWER(user_id) = LOWER(#{user_Id})")
 	public UserDetailEntity getUserDetail(@Param("user_Id") String userId);
 
 	@Select("select user_Id from user_detail order by score desc")
