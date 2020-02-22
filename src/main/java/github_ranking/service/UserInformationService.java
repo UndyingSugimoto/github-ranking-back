@@ -174,6 +174,7 @@ public class UserInformationService {
 			return res;
 		}
 		res.setAvatarUrl(entity.getAvatar_Url());
+		res.setGithubUrl(entity.getGithub_url());
 		res.setFollowersCount(entity.getFollowers_Count());
 		res.setForksCountTotal(entity.getForks_Count_Total());
 		res.setIssuesCount(entity.getIssues_Count());
@@ -188,6 +189,7 @@ public class UserInformationService {
 		res.setUserName(entity.getUser_Name());
 		res.setWatchersCountTotal(entity.getWatchers_Count_Total());
 		res.setCurrentNumber(mapper.getUserCount().stream().count());
+		res.setLastupdateDate(entity.getLastupdate_date());
 
 		return res;
 	}
