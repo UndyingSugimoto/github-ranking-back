@@ -101,9 +101,6 @@ target/
 
 ### Gradle Patch ###
 **/build/
-
-### Gradle ###
-.gradle
 build/
 
 # End of https://www.gitignore.io/api/java,eclipse,java-web
