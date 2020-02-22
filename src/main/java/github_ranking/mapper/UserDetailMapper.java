@@ -14,9 +14,6 @@ import github_ranking.mapper.response.UserDetailEntity;
 
 @Mapper
 public interface UserDetailMapper {
-	//	@Select("SELECT id, name,stockNum FROM Stock")
-	//	public List<Stock> stocklist();
-	//
 	@Insert("insert into user_detail (user_name, user_id , avatar_url , github_url , tier, rank , score, followers_count, issues_count ,pullrequest_count, repositories_count, forks_count_total, stargazer_count_total, watchers_count_total, main_language, lastupdate_date) values (#{userName}, #{userId},#{avatarUrl}, #{githubUrl}, #{tier}, #{rank}, #{score}, #{followersCount}, #{issuesCount}, #{pullRequestCount}, #{repositoriesCount}, #{forksCountTotal}, #{stargazerCountTotal}, #{watchersCountTotal}, #{mainLanguage},#{lastupdateDate})")
 	public void entryUserDetail(@Param("userName") String userName, @Param("userId") String userId,
 			@Param("avatarUrl") String avatarUrl, @Param("githubUrl") String githubUrl, @Param("tier") String tier,
@@ -26,11 +23,7 @@ public interface UserDetailMapper {
 			@Param("repositoriesCount") int repositoriesCount, @Param("forksCountTotal") int forksCountTotal,
 			@Param("stargazerCountTotal") int stargazerCountTotal, @Param("watchersCountTotal") int watchersCountTotal,
 			@Param("mainLanguage") String mainLanguage, @Param("lastupdateDate") LocalDate lastupdateDate);
-
-	//
-	//	@Delete("delete from Stock where id = #{id}")
-	//	public void deleteReqMapper(@Param("id")int id);
-	//
+	
 	@Select("select * from user_detail where LOWER(user_id) = LOWER(#{user_Id})")
 	public UserDetailEntity getUserDetail(@Param("user_Id") String userId);
 
@@ -52,10 +45,4 @@ public interface UserDetailMapper {
 			@Param("repositoriesCount") int repositoriesCount, @Param("forksCountTotal") int forksCountTotal,
 			@Param("stargazerCountTotal") int stargazerCountTotal, @Param("watchersCountTotal") int watchersCountTotal,
 			@Param("mainLanguage") String mainLanguage, @Param("lastupdateDate") LocalDate lastupdateDate);
-
-	//	@Update("update Stock set stockNum = stockNum + #{stockNum} where id = #{id}")
-	//	public void stockChangeMapper(@Param("id")int id,@Param("stockNum")int stockNum);
-	//
-	//	@Update("update Stock set stockNum = #{stockNum} where id = #{id}")
-	//	public void upDateStockMapper(@Param("id")int id,@Param("stockNum")int stockNum);
 }
