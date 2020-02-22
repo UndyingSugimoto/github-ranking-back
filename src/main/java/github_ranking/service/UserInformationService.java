@@ -84,8 +84,6 @@ public class UserInformationService {
 				issuesCount, pullRequestCount, repositoriesCount, forksCountTotal, stargazerCountTotal,
 				watchersCountTotal, mainLanguage, LocalDate.now());
 
-		System.out.println(req);
-
 		UserEntryRes res = new UserEntryRes();
 		res.setUserId(user.getUserId());
 		return res;
@@ -140,8 +138,6 @@ public class UserInformationService {
 				followersCount,
 				issuesCount, pullRequestCount, repositoriesCount, forksCountTotal, stargazerCountTotal,
 				watchersCountTotal, mainLanguage, LocalDate.now());
-
-		System.out.println("req"+ req);
 
 		UserEntryRes res = new UserEntryRes();
 		res.setUserId(user.getUserId());
