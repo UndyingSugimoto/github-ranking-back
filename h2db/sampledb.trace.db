@@ -1,0 +1,4 @@
+2020-04-08 22:44:47 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: ãƒ†ãƒ¼ãƒ–ãƒ« "USER_DETAIL" ã�Œè¦‹ã�¤ã�‹ã‚Šã�¾ã�›ã‚“
+Table "USER_DETAIL" not found; SQL statement:
+select user_id , main_language, score, avatar_url from user_detail order by score desc limit 3 [42102-191]

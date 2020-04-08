@@ -55,4 +55,12 @@ public class GitHubRankingController {
 	public RanksByLanguageRes getRanking() {
 		return userInformationService.getRanksByLanguage();
 	}
+
+	@GetMapping("test")
+	@CrossOrigin(origins = {"http://localhost:3000", "https://github-ranking.herokuapp.com"})
+	public UserDetailRes test() {
+		UserDetailRes res = new UserDetailRes();
+		res.setUserId("test");
+		return res;
+	}
 }
