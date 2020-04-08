@@ -63,4 +63,10 @@ public class GitHubRankingController {
 		res.setUserId("test");
 		return res;
 	}
+	@GetMapping("calc")
+	@CrossOrigin(origins = {"http://localhost:3000", "https://github-ranking.herokuapp.com"})
+	public Integer plus(@RequestParam("one") Integer one,@RequestParam("two") Integer two) {
+		Integer res = one + two;
+		return res;
+	}
 }
